@@ -21,10 +21,10 @@
 
 	<!-- 配置数据源 - 使用tomcat连接池 -->
 	<bean id="dataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
-		<property name="driverClassName" value="${driver}" /><!-- 数据库驱动 -->
-		<property name="url" value="${url}" /> <!-- 连接URL -->
-		<property name="username" value="${username}" /> <!-- 数据库用户名 -->
-		<property name="password" value="${password}" /> <!-- 数据库密码 -->
+		<property name="driverClassName" value="${jdbc.driver}" /><!-- 数据库驱动 -->
+		<property name="url" value="${jdbc.url}" /> <!-- 连接URL -->
+		<property name="username" value="${jdbc.username}" /> <!-- 数据库用户名 -->
+		<property name="password" value="${jdbc.password}" /> <!-- 数据库密码 -->
 		<!-- 连接池参数配置 -->
 		<property name="initialSize" value="1" /><!-- 连接器启动时创建的初始连接数。默认为10 -->
 		<property name="maxActive" value="5" /><!-- 同时能分配的活跃连接的最大数目。默认为100 -->
@@ -39,6 +39,7 @@
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
 		<property name="mapperLocations" value="classpath:org/yangjie/mapper/*.xml" /><!-- 兼容xml方式 -->
+        <property name="configLocation" value="classpath:mybatis-config.xml"/><!-- 配置mybatis全局配置文件 --> 
 	</bean>
 	<!-- 配置Dao所在包 Mybatis会动态创建实现类 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
@@ -50,7 +51,7 @@
 	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
 		<property name="dataSource" ref="dataSource" />
 	</bean>	
-	<!-- 使用注解定义事物 -->
+	<!-- 使用注解定义事务 -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 
 </beans>

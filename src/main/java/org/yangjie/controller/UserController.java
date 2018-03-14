@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.yangjie.service.UserService;
 
 @Controller
-public class UserAction {
+public class UserController {
 
 	@Autowired
 	private UserService userService;
